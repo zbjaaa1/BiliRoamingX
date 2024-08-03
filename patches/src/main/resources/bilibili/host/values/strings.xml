@@ -473,4 +473,13 @@
     <string name="biliroaming_access_key_copied">已复制到剪贴板</string>
     <string name="biliroaming_unlock_gif_title">允许非会员用户上传GIF动图</string>
     <string name="biliroaming_unlock_gif_summary">同时图片显示一视同仁，统一去掉右上角大专属图标，放大1.5倍</string>
+    <string name="biliroaming_disable_non_official_alert_title">禁用打开非官方网页警告</string>
+    <string name="biliroaming_disable_non_official_alert_summary">禁用内部浏览器打开非官方网页时底部横条警告</string>
+    <string name="biliroaming_tool_title">工具</string>
+    <string name="biliroaming_custom_access_key_title">自定义访问密钥</string>
+    <string name="biliroaming_custom_access_key_summary">自定义视频播放取流访问密钥，仅支持新版播放器</string>
+    <string name="biliroaming_key_main">主站</string>
+    <string name="biliroaming_key_th">泰区</string>
+    <string name="biliroaming_pegasus_cover_ratio_title">推荐封面比例</string>
+    <string name="biliroaming_pegasus_cover_ratio_summary">裁切实现自定义小卡（双列显示）推荐的封面比例</string>
 </resources>

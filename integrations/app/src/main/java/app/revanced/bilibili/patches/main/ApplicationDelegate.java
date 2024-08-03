@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -51,7 +50,6 @@ import java.util.Objects;
 import app.revanced.bilibili.account.PassportChangeReceiver;
 import app.revanced.bilibili.patches.CustomThemePatch;
 import app.revanced.bilibili.patches.DpiPatch;
-import app.revanced.bilibili.patches.PlaybackSpeedPatch;
 import app.revanced.bilibili.patches.okhttp.BangumiSeasonHook;
 import app.revanced.bilibili.settings.Settings;
 import app.revanced.bilibili.utils.CrossProcessPreferences;
@@ -101,7 +99,6 @@ public abstract class ApplicationDelegate extends Application {
         Utils.async(2000L, CustomThemePatch::delayRefresh);
         if (Utils.isMainProcess()) {
             Utils.async(ApplicationDelegate::startLog);
-            Utils.async(PlaybackSpeedPatch::refreshOverrideSpeedList);
             SubtitleParamsCache.updateFont();
             KtUtils.getAreaTask();
             UposReplacer.getBaseUposList();
@@ -364,18 +361,16 @@ public abstract class ApplicationDelegate extends Application {
                 radioButton.setCompoundButtonTintList(tintId);
                 radioButton.setText(null);
                 return radioButton;
-            } else if (Utils.isHd() && name.equals(SwitchCompat.class.getName())) {
+            } else if (name.equals(SwitchCompat.class.getName())) {
                 TintSwitchCompat switchCompat = new TintSwitchCompat(context, attrs);
                 Drawable trackDrawable = Utils.getDrawable("abc_switch_track_mtrl_alpha");
                 Drawable thumbDrawable = Utils.getDrawable("abc_switch_thumb_material");
-                ColorStateList trackTint = Utils.getColorStateList(context, "selector_switch_track");
-                ColorStateList thumbTint = Utils.getColorStateList(context, "selector_switch_thumb");
-                trackDrawable.setTintMode(PorterDuff.Mode.SRC_IN);
-                trackDrawable.setTintList(trackTint);
-                thumbDrawable.setTintMode(PorterDuff.Mode.MULTIPLY);
-                thumbDrawable.setTintList(thumbTint);
                 switchCompat.setTrackDrawable(trackDrawable);
                 switchCompat.setThumbDrawable(thumbDrawable);
+                switchCompat.setTrackTintList(Utils.getResId("selector_switch_track", "color"));
+                switchCompat.setThumbTintList(Utils.getResId("selector_switch_thumb", "color"));
+                trackDrawable.setTintMode(PorterDuff.Mode.SRC_IN);
+                thumbDrawable.setTintMode(PorterDuff.Mode.MULTIPLY);
                 return switchCompat;
             } else if (context instanceof Activity activity) {
                 return activity.onCreateView(name, context, attrs);
@@ -434,6 +429,7 @@ public abstract class ApplicationDelegate extends Application {
                 }
             }
             VideoInfoHolder.removeCache(activity);
+            Player.remove(activity);
         }
 
         @Override

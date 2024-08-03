@@ -41,6 +41,8 @@ object Settings {
     @JvmField val DisableP2PUpload = BooleanSetting(key = "disable_p2p_upload", needReboot = true)
     @JvmField val PreferStableCdn = BooleanSetting(key = "prefer_stable_cdn", needReboot = true)
     @JvmField val ForceDisadleH265Codec = BooleanSetting(key = "force_disable_h265_codec", needReboot = true)
+    @JvmField val AccessKeyMain = StringSetting(key = "access_key_main")
+    @JvmField val AccessKeyThailand = StringSetting(key = "access_key_th")
     // endregion
 
 
@@ -83,6 +85,7 @@ object Settings {
     @JvmField val BlockPopularRcmdUp = BooleanSetting(key = "block_popular_rcmd_up")
     @JvmField val BlockPopularLive = BooleanSetting(key = "block_popular_live")
     @JvmField val BlockHomeRecentUsed = BooleanSetting(key = "block_home_recent_used")
+    @JvmField val PegasusCoverRatio = StringSetting(key = "pegasus_cover_ratio", defValue = "0", needReboot = true)
     // endregion
 
 
@@ -266,6 +269,7 @@ object Settings {
         }
     })
     @JvmField val DisallowCollectPrivacyInfo = BooleanSetting(key = "disallow_collect_privacy_info", needReboot = true)
+    @JvmField val DisableWebViewNonOfficialAlert = BooleanSetting(key = "disable_non_official_alert")
     // endregion
 
 
