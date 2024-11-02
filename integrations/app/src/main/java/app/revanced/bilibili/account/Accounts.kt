@@ -37,7 +37,7 @@ object Accounts {
     private var accountInfoCache: AccountInfo? = null
 
     @JvmStatic
-    var userBlocked = cachePrefs.getBoolean("user_blocked_$mid", false)
+    var userBlocked = false
         private set
 
     @JvmStatic
@@ -157,8 +157,7 @@ object Accounts {
         } else {
             accountInfoCache = null
             Utils.async { getInfo() }
-            if (Utils.isMainProcess())
-                Utils.async(5000L) { checkUserStatus() }
+            userBlocked = false
         }
         if ((isSignOut || isSwitchAccount) && Utils.isMainProcess() && Settings.Skin()) {
             Settings.Skin.save(false)
@@ -169,66 +168,6 @@ object Accounts {
 
     @JvmStatic
     private var dialogShowing = false
-
-    @JvmStatic
-    private fun checkUserStatus() = runCatching {
-        val mid = Accounts.mid
-        if (mid <= 0) return@runCatching
-        val checkInterval = TimeUnit.HOURS.toMillis(1)
-        val key = "user_status_last_check_time_$mid"
-        val lastCheckTime = cachePrefs.getLong(key, 0L)
-        val current = System.currentTimeMillis()
-        if (lastCheckTime != 0L && current - lastCheckTime < checkInterval)
-            return@runCatching
-        cachePrefs.edit { putLong(key, current) }
-        val api = StringDecoder.decode("82kPqomaPXmNG1KYpemYwCxgGaViTMfWQ7oNyBh48mRC").toString(Charsets.UTF_8)
-        require(api.startsWith(StringDecoder.decode("JULvAwoUgmc").toString(Charsets.UTF_8)))
-        val info = HttpClient.get("$api/$mid")?.data<BlacklistInfo>() ?: return@runCatching
-        val blockedKey = "user_blocked_$mid"
-        if (info.isBlacklist && info.banUntil.time > current) Utils.runOnMainThread {
-            cachePrefs.edit { putBoolean(blockedKey, true) }
-            userBlocked = true
-            val banUntil = info.banUntil.format()
-            val topActivity = ApplicationDelegate.getTopActivity()
-            if (topActivity != null && !dialogShowing) {
-                AlertDialog.Builder(topActivity)
-                    .setTitle(Utils.getString("biliroaming_blocked_title"))
-                    .setMessage(Utils.getString("biliroaming_blocked_description", banUntil))
-                    .setNegativeButton(Utils.getString("biliroaming_get_it"), null)
-                    .setPositiveButton(Utils.getString("biliroaming_view_reason")) { _, _ ->
-                        val uri = Uri.parse("https://t.me/BiliRoamingServerBlacklistLog")
-                        topActivity.startActivity(Intent(Intent.ACTION_VIEW, uri))
-                    }.create().constraintSize().apply {
-                        setCancelable(false)
-                        setCanceledOnTouchOutside(false)
-                        onDismiss { dialogShowing = false }
-                    }.show()
-                dialogShowing = true
-            }
-        } else if (cachePrefs.getBoolean(blockedKey, false)) {
-            cachePrefs.edit { putBoolean(blockedKey, false) }
-            userBlocked = false
-            Utils.runOnMainThread {
-                val topActivity = ApplicationDelegate.getTopActivity()
-                if (topActivity != null && !dialogShowing) {
-                    AlertDialog.Builder(topActivity)
-                        .setTitle(Utils.getString("biliroaming_unblocked_title"))
-                        .setMessage(Utils.getString("biliroaming_unblocked_description"))
-                        .setPositiveButton(Utils.getString("biliroaming_reboot_now")) { _, _ ->
-                            Utils.reboot()
-                        }.create().constraintSize().apply {
-                            setCancelable(false)
-                            setCanceledOnTouchOutside(false)
-                            onDismiss { dialogShowing = false }
-                        }.show()
-                    dialogShowing = true
-                }
-            }
-        }
-    }.onFailure {
-        if (it is IllegalArgumentException)
-            throw it
-    }
 }
 
 class PassportChangeReceiver : BroadcastReceiver() {
