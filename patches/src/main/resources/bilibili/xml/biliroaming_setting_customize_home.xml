@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.preference.PreferenceCategory
+        android:key="category_customize_home"
+        android:layout="@layout/bili_app_layout_preference_category_title"
+        android:title="@string/biliroaming_customize_home_summary">
+        <androidx.preference.Preference
+            android:fragment="app.revanced.bilibili.settings.fragments.CustomizeBottomFragment"
+            android:key="customize_bottom"
+            android:title="@string/biliroaming_customize_bottom_title" />
+        <androidx.preference.Preference
+            android:fragment="app.revanced.bilibili.settings.fragments.CustomizeHomeTabFragment"
+            android:key="home_tab"
+            android:summary="@string/biliroaming_customize_home_tab_summary"
+            android:title="@string/biliroaming_customize_home_tab_title" />
+        <androidx.preference.Preference
+            android:fragment="app.revanced.bilibili.settings.fragments.FilterHomeRcmdFragment"
+            android:key="filter_home_recommend"
+            android:title="@string/biliroaming_filter_home_recommend_title" />
+        <androidx.preference.Preference
+            android:fragment="app.revanced.bilibili.settings.fragments.FilterPopularFragment"
+            android:key="filter_popular"
+            android:title="@string/biliroaming_filter_popular_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="disable_auto_refresh"
+            android:summary="@string/biliroaming_disable_auto_refresh_summary"
+            android:title="@string/biliroaming_disable_auto_refresh_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="block_recommend_guidance"
+            android:summary="@string/biliroaming_block_recommend_guidance_summary"
+            android:title="@string/biliroaming_block_recommend_guidance_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="add_bangumi"
+            android:summary="@string/biliroaming_add_bangumi_summary"
+            android:title="@string/biliroaming_add_bangumi_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="add_movie"
+            android:summary="@string/biliroaming_add_movie_summary"
+            android:title="@string/biliroaming_add_movie_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="add_korea"
+            android:summary="@string/biliroaming_add_korea_summary"
+            android:title="@string/biliroaming_add_korea_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="purify_game"
+            android:title="@string/biliroaming_purify_game_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="block_top_activity"
+            android:title="@string/biliroaming_block_top_activity_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="drawer"
+            android:summary="@string/biliroaming_drawer_summary"
+            android:title="@string/biliroaming_drawer_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="disable_main_page_story"
+            android:summary="@string/biliroaming_disable_main_page_story_summary"
+            android:title="@string/biliroaming_disable_main_page_story_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="block_home_recent_used"
+            android:summary="@string/biliroaming_block_home_recent_used_summary"
+            android:title="@string/biliroaming_block_home_recent_used_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="dynamic_no_up_recall"
+            android:summary="@string/biliroaming_dynamic_no_up_recall_summary"
+            android:title="@string/biliroaming_dynamic_no_up_recall_title" />
+        <tv.danmaku.bili.widget.preference.BLRadioGroupEntrancePreference
+            android:fragment="app.revanced.bilibili.settings.fragments.PegasusCoverRatioFragment"
+            android:key="pegasus_cover_ratio"
+            android:persistent="true"
+            android:title="@string/biliroaming_pegasus_cover_ratio_title"
+            app:migration_settings_type="none"
+            app:radioDefaultValue="0"
+            app:radioEntries="@array/biliroaming_pegasus_cover_ratio_entries"
+            app:radioEntryValues="@array/biliroaming_pegasus_cover_ratio_values" />
+    </androidx.preference.PreferenceCategory>
+</androidx.preference.PreferenceScreen>
