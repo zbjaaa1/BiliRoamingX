@@ -329,6 +329,8 @@
     <string name="biliroaming_choose_image">选择一张图片</string>
     <string name="biliroaming_force_hw_codec_title">强制硬解</string>
     <string name="biliroaming_force_hw_codec_summary">B站一般会优先硬解，视情况启用</string>
+    <string name="biliroaming_force_disable_h265_codec_title">禁用H.265/HEVC</string>
+    <string name="biliroaming_force_disable_h265_codec_summary">视频同等画质下一般 H.265/HEVC 相较 H.264/AVC 压缩率更高，体积更小，但对设备性能要求稍微高一点，H.264/AVC 不支持 HDR、杜比视界及 8K</string>
     <string name="biliroaming_old_fav_title">强制旧版收藏逻辑</string>
     <string name="biliroaming_old_fav_summary">将新版的点按收藏至默认文件夹，长按选择文件夹收藏逻辑恢复为旧版点按选择文件夹收藏</string>
     <string name="biliroaming_filter_comment_title">评论过滤</string>
